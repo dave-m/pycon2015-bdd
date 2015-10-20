@@ -19,8 +19,8 @@ Behaviour Driven Design through Python
 
 ----
 
-What this talk is about
-=======================
+What this is about
+==================
 
 The **why** much more than the how.
 
@@ -38,7 +38,7 @@ About me
 - Robotics Engineer
 - With Python for 5 years
 - Manufacturing, Web / Cloud hosting, Financial Services
-- Currently lead a multinational team of 8 across a global business
+- Team Lead & Senior Software Engineer
 - Not great at CSS
 
 
@@ -344,12 +344,17 @@ Free to choose what to use to drive the tests
 Technology applied
 ==================
 
-The hard bit
-
 ----
 
 Lets run through an example
 ===========================
+
+.. image:: http://www.sail-world.com/photo/photos_2012_3/Alt_London201212cb_04475.jpg 
+
+----
+
+Our (first) Feature
+===================
 
 .. code:: Gherkin
 
@@ -394,6 +399,16 @@ Don't tie it to a technical implementation
 
 ----
 
+How should I set up state?
+==========================
+
+* Eat your own dogfood / Use Public API's
+* Clean state (idempotent)
+* Repeatable
+* DB / test specific inserts a method of last resort
+
+----
+
 Setting up initial state
 ========================
 
@@ -418,13 +433,43 @@ every scenario in the current Feature
 
 ----
 
-How should I set up state?
-==========================
+Scenario input data
+===================
 
-* Eat your own dogfood / Use Public API's
-* Clean state (idempotent)
-* Repeatable
-* DB / test specific inserts a method of last resort
+*"I never want to add just 1"*
+
+.. code:: Gherkin
+
+    Scenario: Create a new Race
+      Given I am view the "Nationals" Regatta
+      When I click on the "Races" button
+      and I click on the "New Race" button
+      and I enter in the following race details:
+        | Name    | Course      | Laps  |
+        | Race 1  | Triangle    | 3     |
+        | Race 2  | Triangle    | 3     |
+        | Race 3  | Trapezoid   | 3     |
+      and I click on the "+" button
+      Then I see there are 3 Races:
+        | Race Name   | Course    | Laps |
+        | First Race  | Triangle  | 3    |
+        | Second Race | Trapezoid | 2    |
+        | Race 3      | Trapezoid | 3    |
+
+----
+
+Many (slightly) different Examples
+==================================
+
+*DRY*
+
+.. code:: Gherkin
+
+    Scenario Outline: INSERT
+
+    Examples:
+        | Param 1 | Param 2 |
+        | True    | False   |
 
 ----
 
@@ -468,7 +513,7 @@ what the hell am I supposed to do with these?
 Demand to see life’s manager! 
 Make life rue the day it thought it could give Cave Johnson lemons!"
 
-*Cave Jonhson, Portal 2*
+*Cave Jonhson, Portal 2, Valve Software*
 
 ----
 
